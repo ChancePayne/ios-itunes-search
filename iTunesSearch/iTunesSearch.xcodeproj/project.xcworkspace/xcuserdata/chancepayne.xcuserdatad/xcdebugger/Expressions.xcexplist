@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "SearchResultController.performSearch(search:resultType:completion:):SearchResultController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "SearchResultsTableViewController.buildUiSegmentedControl():SearchResultsTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "ResultType.types">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in SearchResultsTableViewController.viewDidLoad():SearchResultsTableViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "SearchResultsTableViewController.searchBarSearchButtonClicked(_:):SearchResultsTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "ResultType.types[resultType]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
