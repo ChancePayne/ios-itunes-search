@@ -8,16 +8,19 @@
 
 import UIKit
 
-class SearchResultsTableViewController: UITableViewController {
+class SearchResultsViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var typeController: UISegmentedControl!
     
+    @IBOutlet weak var tableView: UITableView!
     var searchResultController = SearchResultController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.searchBar.delegate = self
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         
         buildUiSegmentedControl()
 
@@ -29,8 +32,6 @@ class SearchResultsTableViewController: UITableViewController {
     }
     
     func buildUiSegmentedControl() {
-        let count = typeController.numberOfSegments
-        
         for i in 0...ResultType.types.count - 1 {
             if i < typeController.numberOfSegments {
                 typeController.setTitle(Array(ResultType.types.keys)[i], forSegmentAt: i)
@@ -39,31 +40,6 @@ class SearchResultsTableViewController: UITableViewController {
             }
         }
     }
-    
-    
-
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return self.searchResultController.searchResults.count
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "resultCell", for: indexPath) as? SearchResultTableViewCell else { return UITableViewCell() }
-
-        // Configure the cell...
-        cell.searchResult = searchResultController.searchResults[indexPath.row]
-
-        return cell
-    }
-    
-    
     
     /*
     // MARK: - Navigation
@@ -77,7 +53,30 @@ class SearchResultsTableViewController: UITableViewController {
 
 }
 
-extension SearchResultsTableViewController: UISearchBarDelegate {
+extension SearchResultsViewController: UITableViewDelegate, UITableViewDataSource {
+    // MARK: - Table view data source
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return self.searchResultController.searchResults.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "resultCell", for: indexPath) as? SearchResultTableViewCell else { return UITableViewCell() }
+        
+        // Configure the cell...
+        cell.searchResult = searchResultController.searchResults[indexPath.row]
+        
+        return cell
+    }
+}
+
+extension SearchResultsViewController: UISearchBarDelegate {
     public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchTerm = searchBar.text,
         let resultType = self.typeController.titleForSegment(at: self.typeController.selectedSegmentIndex) else { return }
